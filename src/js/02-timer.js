@@ -4,6 +4,9 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
 const inputDate = document.querySelector('input[type="text"]')
+const buttonJS = document.querySelector('button[data-start]')
+
+buttonJS.addEventListener('click', (evt => console.log("sdsd")))
 
 const options = {
   enableTime: true,
@@ -15,6 +18,7 @@ const options = {
       window.alert("Please choose a date in the future")
       return;
     }
+    buttonJS.removeAttribute("disabled")
     console.log(selectedDates[0]);
   },
 };
