@@ -5,6 +5,14 @@ import "flatpickr/dist/flatpickr.min.css";
 
 const inputDate = document.querySelector('input[type="text"]')
 const buttonJS = document.querySelector('button[data-start]')
+const dayJS = document.querySelector('.timer span[data-days]')
+const hoursJS = document.querySelector('.timer span[data-hours]')
+const minutesJS = document.querySelector('.timer span[data-minutes]')
+const secondsJS = document.querySelector('.timer span[data-seconds]')
+const newDateFormat = {};
+let newTimeEnd = 0;
+
+
 
 buttonJS.addEventListener('click', (evt => console.log("sdsd")))
 
@@ -19,12 +27,50 @@ const options = {
       return;
     }
     buttonJS.removeAttribute("disabled")
-    console.log(selectedDates[0]);
+    console.log(selectedDates[0].getTime());
+    newTimeEnd = selectedDates[0].getTime() - dateUnixToday;
+    console.log(convertMs(newTimeEnd).days)
+    console.log(dayJS.innerHTML = convertMs(newTimeEnd).days);
+    hoursJS.innerHTML = convertMs(newTimeEnd).hours
+    minutesJS.innerHTML = convertMs(newTimeEnd).minutes
+    secondsJS.innerHTML = convertMs(newTimeEnd).seconds
+    return console.log(newTimeEnd);
+
   },
 };
 
 flatpickr(inputDate, options)
 
 const date = new Date();
+const dateUnixToday = date.getTime()
+
 
 console.log(date);
+console.log(dateUnixToday);
+console.log(newTimeEnd);
+
+
+function convertMs(ms) {
+  // Number of milliseconds per unit of time
+  const second = 1000;
+  const minute = second * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
+
+  // Remaining days
+  const days = Math.floor(ms / day);
+  // Remaining hours
+  const hours = Math.floor((ms % day) / hour);
+  // Remaining minutes
+  const minutes = Math.floor(((ms % day) % hour) / minute);
+  // Remaining seconds
+  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+
+  return { days, hours, minutes, seconds };
+}
+
+console.log(convertMs(dateUnixToday)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
+console.log(convertMs(newTimeEnd)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
+console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
+
+
