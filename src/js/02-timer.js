@@ -13,8 +13,13 @@ const newDateFormat = {};
 let newTimeEnd = 0;
 
 
+function addLeadingZero(value){
+  if(value.length <= 1){
+    return value.padStart(2, '0')
+  } return value
+}
 
-buttonJS.addEventListener('click', (evt => console.log("sdsd")))
+
 
 const options = {
   enableTime: true,
@@ -27,14 +32,18 @@ const options = {
       return;
     }
     buttonJS.removeAttribute("disabled")
-    console.log(selectedDates[0].getTime());
+    selectedDates[0].getTime();
     newTimeEnd = selectedDates[0].getTime() - dateUnixToday;
-    console.log(convertMs(newTimeEnd).days)
-    console.log(dayJS.innerHTML = convertMs(newTimeEnd).days);
+    dayJS.innerHTML = convertMs(newTimeEnd).days;
     hoursJS.innerHTML = convertMs(newTimeEnd).hours
     minutesJS.innerHTML = convertMs(newTimeEnd).minutes
     secondsJS.innerHTML = convertMs(newTimeEnd).seconds
-    return console.log(newTimeEnd);
+    dayJS.innerHTML = addLeadingZero(dayJS.innerHTML)
+    hoursJS.innerHTML = addLeadingZero(hoursJS.innerHTML)
+    minutesJS.innerHTML = addLeadingZero(minutesJS.innerHTML)
+    secondsJS.innerHTML = addLeadingZero(secondsJS.innerHTML)
+
+    return newTimeEnd;
 
   },
 };
@@ -43,12 +52,7 @@ flatpickr(inputDate, options)
 
 const date = new Date();
 const dateUnixToday = date.getTime()
-
-
-console.log(date);
-console.log(dateUnixToday);
-console.log(newTimeEnd);
-
+const result = dateUnixToday - newTimeEnd;
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -69,8 +73,27 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-console.log(convertMs(dateUnixToday)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-console.log(convertMs(newTimeEnd)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
+function start(){
+  const startTime = Date.now();
+
+  setInterval(() => {
+    const currentTime = Date.now() - newTimeEnd;
+    let valTime =  startTime - currentTime
+
+    dayJS.innerHTML = convertMs(valTime).days;
+    hoursJS.innerHTML = convertMs(valTime).hours
+    minutesJS.innerHTML = convertMs(valTime).minutes
+    secondsJS.innerHTML = convertMs(valTime).seconds
 
 
+
+    dayJS.innerHTML = addLeadingZero(dayJS.innerHTML)
+    hoursJS.innerHTML = addLeadingZero(hoursJS.innerHTML)
+    minutesJS.innerHTML = addLeadingZero(minutesJS.innerHTML)
+    secondsJS.innerHTML = addLeadingZero(secondsJS.innerHTML)
+  }, 1000);
+}
+
+
+
+buttonJS.addEventListener("click", start);
