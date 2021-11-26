@@ -8,10 +8,12 @@ let aktive = false;
 
 start.addEventListener('click', (evt) => {
   if(aktive === true ){
+
     return
   }
   aktive = true;
   console.log(evt)
+  start.setAttribute("disabled", "disabled")
   timerId = setInterval(() => {
     body.style.backgroundColor = getRandomHexColor()
   },TIMEDELAY);
@@ -27,6 +29,7 @@ function getRandomHexColor() {
 stop.addEventListener("click", () => {
   clearInterval(timerId);
   aktive = false;
+  start.removeAttribute("disabled")
 });
 
 
