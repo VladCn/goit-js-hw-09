@@ -5,24 +5,12 @@ const stepMs = document.querySelector("input[name=step]")
 const amount = document.querySelector("input[name=amount]")
 const form = document.querySelector(".form")
 
-
-delayMs.addEventListener("input", (event) => {
-  delayMs.value = event.currentTarget.value;
-});
-
-stepMs.addEventListener("input", (event) => {
-  stepMs.value = event.currentTarget.value;
-});
-
-amount.addEventListener("input", (event) => {
-  amount.value = event.currentTarget.value;
-});
-
 form.addEventListener('submit', submitHandler)
 
 function submitHandler(event){
   event.preventDefault();
   let counter = Number(delayMs.value)
+  console.log(counter)
   for (let i = 0; i < Number(amount.value); i +=1){
     createPromise(i, counter)
       .then(({ position, delay }) => {
