@@ -19,8 +19,6 @@ function addLeadingZero(value){
   } return value
 }
 
-
-
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -32,8 +30,10 @@ const options = {
       return;
     }
     buttonJS.removeAttribute("disabled")
+
     selectedDates[0].getTime();
     newTimeEnd = selectedDates[0].getTime() - dateUnixToday;
+
     dayJS.innerHTML = convertMs(newTimeEnd).days;
     hoursJS.innerHTML = convertMs(newTimeEnd).hours
     minutesJS.innerHTML = convertMs(newTimeEnd).minutes
@@ -44,9 +44,10 @@ const options = {
     secondsJS.innerHTML = addLeadingZero(secondsJS.innerHTML)
 
     return newTimeEnd;
-
   },
+
 };
+
 
 flatpickr(inputDate, options)
 
@@ -75,7 +76,8 @@ function convertMs(ms) {
 
 function start(){
   const startTime = Date.now();
-
+  buttonJS.setAttribute("disabled","disabled")
+  inputDate.setAttribute("disabled","disabled")
   setInterval(() => {
     const currentTime = Date.now() - newTimeEnd;
     let valTime =  startTime - currentTime
@@ -85,15 +87,11 @@ function start(){
     minutesJS.innerHTML = convertMs(valTime).minutes
     secondsJS.innerHTML = convertMs(valTime).seconds
 
-
-
     dayJS.innerHTML = addLeadingZero(dayJS.innerHTML)
     hoursJS.innerHTML = addLeadingZero(hoursJS.innerHTML)
     minutesJS.innerHTML = addLeadingZero(minutesJS.innerHTML)
     secondsJS.innerHTML = addLeadingZero(secondsJS.innerHTML)
   }, 1000);
 }
-
-
 
 buttonJS.addEventListener("click", start);

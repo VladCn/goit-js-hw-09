@@ -11,7 +11,7 @@ function submitHandler(event){
   event.preventDefault();
   let counter = Number(delayMs.value)
   console.log(counter)
-  for (let i = 0; i < Number(amount.value); i +=1){
+  for (let i = 1; i <= Number(amount.value); i +=1){
     createPromise(i, counter)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
